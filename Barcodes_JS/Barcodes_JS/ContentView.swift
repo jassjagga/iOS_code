@@ -8,6 +8,7 @@ import PhotosUI
 
 struct ContentView: View {
     @State private var inputCode: String = ""
+    @State private var barcodeType: BarcodeType = .default8Digit
     @State private var barcodeData: [(code: String, image: UIImage)] = []
     @State private var firstBarcode: UIImage?
     @State private var firstBarcodeLabel: String = ""
@@ -23,15 +24,62 @@ struct ContentView: View {
 
     @FocusState private var isInputFocused: Bool
 
+    enum BarcodeType: String, CaseIterable, Identifiable {
+        case default8Digit = "8-Digit Barcode"
+        case code128 = "Code 128"
+        case qrCode = "QR Code"
+        case pdf417 = "PDF417"
+        case dataMatrix = "Data Matrix"
+        case aztec = "Aztec Code"
+        case code39 = "Code 39"
+        case ean8 = "EAN-8"
+        case ean13 = "EAN-13"
+        
+        var id: String { self.rawValue }
+    }
+
     var body: some View {
         VStack(spacing: 20) {
             Text("Barcode Generator")
                 .font(.largeTitle)
+                .foregroundColor(.primary) // Dynamic text color
                 .padding(.top)
 
-            TextField("Enter 8-digit item numbers, separated by commas", text: $inputCode)
+            // Dropdown Menu for Barcode Type Selection
+            Menu {
+                ForEach(BarcodeType.allCases) { type in
+                    Button(action: {
+                        barcodeType = type
+                    }) {
+                        Text(type.rawValue)
+                            .foregroundColor(.primary) // Dynamic text color
+                    }
+                }
+            } label: {
+                HStack {
+                    Text("Select Barcode Type: \(barcodeType.rawValue)")
+                        .foregroundColor(.primary) // Dynamic text color
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(.secondary) // Dynamic secondary color
+                }
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 8).stroke(Color.gray, lineWidth: 1))
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .background(Color(UIColor.systemBackground)) // Dynamic background
+                )
+            }
+            .padding(.horizontal)
+
+            TextField("Enter item numbers (comma-separated)", text: $inputCode)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .background(Color(UIColor.secondarySystemBackground)) // Dynamic background
+                )
                 .padding(.horizontal)
                 .focused($isInputFocused)
                 .toolbar {
@@ -47,6 +95,7 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "paperclip")
                             .padding()
+                            .foregroundColor(.primary) // Dynamic icon color
                     }
                     .offset(x: -30),
                     alignment: .trailing
@@ -55,8 +104,8 @@ struct ContentView: View {
             Button(action: {
                 showImagePicker = true
             }) {
-                Text("Capture or Select Image")
-                    .foregroundColor(.white)
+                Text("Select Image")
+                    .foregroundColor(.white) // Keeps contrast for button
                     .padding()
                     .background(Color.orange)
                     .cornerRadius(8)
@@ -66,7 +115,7 @@ struct ContentView: View {
                 generateBarcodesFromInput()
             }) {
                 Text("Generate Barcode")
-                    .foregroundColor(.white)
+                    .foregroundColor(.white) // Keeps contrast for button
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(8)
@@ -76,12 +125,14 @@ struct ContentView: View {
                 VStack {
                     Text("First Barcode")
                         .font(.headline)
+                        .foregroundColor(.primary) // Dynamic text color
                     Image(uiImage: firstBarcode)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 100)
                     Text(firstBarcodeLabel)
                         .font(.subheadline)
+                        .foregroundColor(.secondary) // Dynamic text color
                         .padding(.bottom)
                 }
             }
@@ -90,12 +141,14 @@ struct ContentView: View {
                 VStack {
                     Text("Last Barcode")
                         .font(.headline)
+                        .foregroundColor(.primary) // Dynamic text color
                     Image(uiImage: lastBarcode)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 100)
                     Text(lastBarcodeLabel)
                         .font(.subheadline)
+                        .foregroundColor(.secondary) // Dynamic text color
                         .padding(.bottom)
                 }
             }
@@ -104,7 +157,7 @@ struct ContentView: View {
                 saveToPDF()
             }) {
                 Text("Download PDF")
-                    .foregroundColor(.white)
+                    .foregroundColor(.white) // Keeps contrast for button
                     .padding()
                     .background(Color.green)
                     .cornerRadius(8)
@@ -117,11 +170,12 @@ struct ContentView: View {
                         ProgressView("Generating PDF...", value: progress, total: 1.0)
                             .progressViewStyle(LinearProgressViewStyle())
                             .padding()
+                            .foregroundColor(.primary) // Dynamic text color
                         Text("\(Int(progress * 100))% completed")
+                            .foregroundColor(.secondary) // Dynamic text color
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.black.opacity(0.5))
-                    .foregroundColor(.white)
+                    .background(Color.black.opacity(0.5)) // Semi-transparent overlay
                 }
             }
         )
@@ -139,27 +193,17 @@ struct ContentView: View {
             }
         }
     }
-
-    // MARK: - Reset App State
-    func resetAppState() {
-        inputCode = ""
-        barcodeData = []
-        firstBarcode = nil
-        firstBarcodeLabel = ""
-        lastBarcode = nil
-        lastBarcodeLabel = ""
-        progress = 0.0
-    }
-
     // MARK: - Generate Barcodes from Text Input
     func generateBarcodesFromInput() {
         let codes = inputCode
             .split(whereSeparator: { $0 == "," || $0.isWhitespace || $0 == "-" })
             .map { String($0) }
-            .filter { $0.count == 8 }
+            .filter { code in
+                barcodeType == .default8Digit ? code.count == 8 : !code.isEmpty
+            }
 
         if codes.isEmpty {
-            showError(with: "No valid 8-digit numbers found.")
+            showError(with: "No valid numbers found for \(barcodeType.rawValue).")
             return
         }
 
@@ -175,6 +219,62 @@ struct ContentView: View {
         }
 
         barcodeData = images
+    }
+
+    // MARK: - Generate Barcode Image Based on Type
+    func generateBarcode(from code: String) -> UIImage? {
+        let filter: CIFilter?
+        
+        switch barcodeType {
+        case .default8Digit, .code128:
+            filter = CIFilter.code128BarcodeGenerator()
+        case .qrCode:
+            filter = CIFilter.qrCodeGenerator()
+        case .pdf417:
+            filter = CIFilter.pdf417BarcodeGenerator()
+        case .aztec:
+            filter = CIFilter.aztecCodeGenerator()
+        case .dataMatrix:
+            if #available(iOS 15.0, *) {
+                filter = CIFilter(name: "CIDataMatrixCodeGenerator") // Available in iOS 15.0 and later
+            } else {
+                // Placeholder or error handling for unsupported iOS versions
+                showError(with: "Data Matrix is not supported on this iOS version.")
+                return nil
+            }
+        case .code39:
+            return generateCode39Barcode(from: code) // Placeholder for custom Code 39 generation
+        case .ean8, .ean13:
+            return generateEANBarcode(from: code)    // Placeholder for custom EAN-8/EAN-13 generation
+        }
+        
+        filter?.setValue(Data(code.utf8), forKey: "inputMessage")
+        
+        guard let outputImage = filter?.outputImage else { return nil }
+        let transformed = outputImage.transformed(by: CGAffineTransform(scaleX: 3, y: 3))
+        return UIImage(ciImage: transformed)
+    }
+
+
+    // MARK: - Custom Barcode Generators (Placeholders for Code 39 and EAN)
+    func generateCode39Barcode(from code: String) -> UIImage? {
+        // Placeholder function for generating Code 39 using external libraries or custom implementation
+        return nil
+    }
+
+    func generateEANBarcode(from code: String) -> UIImage? {
+        // Placeholder function for generating EAN-8 or EAN-13 using external libraries or custom implementation
+        return nil
+    }
+
+    // MARK: - Generate Batch Barcodes
+    func generateBatchBarcodes(from codes: [String]) -> [(code: String, image: UIImage)] {
+        return codes.compactMap { code in
+            if let barcodeImage = generateBarcode(from: code) {
+                return (code: code, image: barcodeImage)
+            }
+            return nil
+        }
     }
 
     // MARK: - PDF Generation with Progress Tracking
@@ -227,7 +327,6 @@ struct ContentView: View {
                             yPosition = 20
                         }
 
-                        // Update progress
                         DispatchQueue.main.async {
                             progress = Double(index + 1) / Double(barcodeData.count)
                         }
@@ -237,8 +336,8 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     pdfURL = pdfFilePath
                     sharePDF(fileURL: pdfFilePath)
-                    isProcessing = false // Hide progress bar when done
-                    resetAppState() // Reset the app state after downloading the PDF
+                    isProcessing = false
+                    resetAppState()
                 }
                 
             } catch {
@@ -263,28 +362,6 @@ struct ContentView: View {
         }
     }
     
-    // MARK: - Generate Barcode Image
-    func generateBarcode(from code: String) -> UIImage? {
-        let filter = CIFilter.code128BarcodeGenerator()
-        filter.message = Data(code.utf8)
-
-        if let outputImage = filter.outputImage {
-            let transformed = outputImage.transformed(by: CGAffineTransform(scaleX: 3, y: 3))
-            return UIImage(ciImage: transformed)
-        }
-        return nil
-    }
-
-    // MARK: - Generate Batch Barcodes
-    func generateBatchBarcodes(from codes: [String]) -> [(code: String, image: UIImage)] {
-        return codes.compactMap { code in
-            if let barcodeImage = generateBarcode(from: code) {
-                return (code: code, image: barcodeImage)
-            }
-            return nil
-        }
-    }
-
     // MARK: - File Upload Handling
     func handleFile(url: URL) {
         if url.startAccessingSecurityScopedResource() {
@@ -311,7 +388,7 @@ struct ContentView: View {
                         if let worksheet = try? file.parseWorksheet(at: path) {
                             for row in worksheet.data?.rows ?? [] {
                                 for cell in row.cells {
-                                    if let value = cell.stringValue(sharedStrings), value.count == 8, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: value)) {
+                                    if let value = cell.stringValue(sharedStrings), barcodeType == .default8Digit ? value.count == 8 : !value.isEmpty, CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: value)) {
                                         itemCodes.append(value)
                                     }
                                 }
@@ -329,19 +406,13 @@ struct ContentView: View {
 
     func readTextOrPDFFile(url: URL) {
         do {
-            let content = try String(contentsOf: url, encoding: .utf8) // Updated for iOS 18
-            let codes = content.split(whereSeparator: { !$0.isNumber }).map { String($0) }.filter { $0.count == 8 }
+            let content = try String(contentsOf: url, encoding: .utf8)
+            let codes = content.split(whereSeparator: { !$0.isNumber }).map { String($0) }.filter { barcodeType == .default8Digit ? $0.count == 8 : !$0.isEmpty }
             inputCode = codes.joined(separator: ",")
             generateBarcodesFromInput()
         } catch {
             showError(with: "Failed to read file content.")
         }
-    }
-
-    // MARK: - Error Handling
-    func showError(with message: String) {
-        errorMessage = message
-        showError = true
     }
 
     // MARK: - Image Preprocessing (Grayscale, Contrast, and Sharpening)
@@ -368,7 +439,7 @@ struct ContentView: View {
 
     // MARK: - Image Recognition (OCR) for Barcodes with Enhanced Processing
     func processImage(_ image: UIImage) {
-        guard image.cgImage != nil else { // Updated to boolean check
+        guard image.cgImage != nil else {
             showError(with: "Unable to process image.")
             return
         }
@@ -382,7 +453,6 @@ struct ContentView: View {
             let allDetectedText = observations.compactMap { observation in
                 observation.topCandidates(1).first?.string
             }
-            print("All detected text (unfiltered):", allDetectedText)
 
             let detectedCodes = allDetectedText.flatMap { text in
                 let regex = try? NSRegularExpression(pattern: "\\b\\d{8}\\b")
@@ -403,6 +473,23 @@ struct ContentView: View {
         let preprocessedImage = preprocessImage(image) ?? image
         let requestHandler = VNImageRequestHandler(cgImage: preprocessedImage.cgImage!, options: [:])
         try? requestHandler.perform([request])
+    }
+
+    // MARK: - Reset App State
+    func resetAppState() {
+        inputCode = ""
+        barcodeData = []
+        firstBarcode = nil
+        firstBarcodeLabel = ""
+        lastBarcode = nil
+        lastBarcodeLabel = ""
+        progress = 0.0
+    }
+
+    // MARK: - Error Handling
+    func showError(with message: String) {
+        errorMessage = message
+        showError = true
     }
 }
 
