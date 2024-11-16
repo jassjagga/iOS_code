@@ -19,6 +19,8 @@ struct ContentView: View {
     @State private var showDocumentPicker = false
     @State private var pdfURL: URL?
     @State private var showImagePicker = false
+    @State private var showCameraPicker = false
+    @State private var showActionSheet = false
     @State private var isProcessing: Bool = false
     @State private var progress: Double = 0.0
 
@@ -42,33 +44,32 @@ struct ContentView: View {
         VStack(spacing: 20) {
             Text("Barcode Generator")
                 .font(.largeTitle)
-                .foregroundColor(.primary) // Dynamic text color
+                .foregroundColor(.primary)
                 .padding(.top)
 
-            // Dropdown Menu for Barcode Type Selection
             Menu {
                 ForEach(BarcodeType.allCases) { type in
                     Button(action: {
                         barcodeType = type
                     }) {
                         Text(type.rawValue)
-                            .foregroundColor(.primary) // Dynamic text color
+                            .foregroundColor(.primary)
                     }
                 }
             } label: {
                 HStack {
                     Text("Select Barcode Type: \(barcodeType.rawValue)")
-                        .foregroundColor(.primary) // Dynamic text color
+                        .foregroundColor(.primary)
                     Spacer()
                     Image(systemName: "chevron.down")
-                        .foregroundColor(.secondary) // Dynamic secondary color
+                        .foregroundColor(.secondary)
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.gray, lineWidth: 1)
-                        .background(Color(UIColor.systemBackground)) // Dynamic background
+                        .background(Color(UIColor.systemBackground))
                 )
             }
             .padding(.horizontal)
@@ -78,7 +79,7 @@ struct ContentView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.gray, lineWidth: 1)
-                        .background(Color(UIColor.secondarySystemBackground)) // Dynamic background
+                        .background(Color(UIColor.secondarySystemBackground))
                 )
                 .padding(.horizontal)
                 .focused($isInputFocused)
@@ -95,27 +96,51 @@ struct ContentView: View {
                     }) {
                         Image(systemName: "paperclip")
                             .padding()
-                            .foregroundColor(.primary) // Dynamic icon color
+                            .foregroundColor(.primary)
                     }
                     .offset(x: -30),
                     alignment: .trailing
                 )
 
             Button(action: {
-                showImagePicker = true
+                showActionSheet = true
             }) {
                 Text("Select Image")
-                    .foregroundColor(.white) // Keeps contrast for button
+                    .foregroundColor(.white)
                     .padding()
                     .background(Color.orange)
                     .cornerRadius(8)
+            }
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(
+                    title: Text("Select Source"),
+                    buttons: [
+                        .default(Text("Camera")) {
+                            showCameraPicker = true
+                        },
+                        .default(Text("Photo Gallery")) {
+                            showImagePicker = true
+                        },
+                        .cancel()
+                    ]
+                )
+            }
+            .sheet(isPresented: $showCameraPicker) {
+                CameraPicker { image in
+                    processImage(preprocessImage(image) ?? image)
+                }
+            }
+            .sheet(isPresented: $showImagePicker) {
+                ImagePicker { image in
+                    processImage(preprocessImage(image) ?? image)
+                }
             }
 
             Button(action: {
                 generateBarcodesFromInput()
             }) {
                 Text("Generate Barcode")
-                    .foregroundColor(.white) // Keeps contrast for button
+                    .foregroundColor(.white)
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(8)
@@ -125,14 +150,14 @@ struct ContentView: View {
                 VStack {
                     Text("First Barcode")
                         .font(.headline)
-                        .foregroundColor(.primary) // Dynamic text color
+                        .foregroundColor(.primary)
                     Image(uiImage: firstBarcode)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 100)
                     Text(firstBarcodeLabel)
                         .font(.subheadline)
-                        .foregroundColor(.secondary) // Dynamic text color
+                        .foregroundColor(.secondary)
                         .padding(.bottom)
                 }
             }
@@ -141,14 +166,14 @@ struct ContentView: View {
                 VStack {
                     Text("Last Barcode")
                         .font(.headline)
-                        .foregroundColor(.primary) // Dynamic text color
+                        .foregroundColor(.primary)
                     Image(uiImage: lastBarcode)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 200, height: 100)
                     Text(lastBarcodeLabel)
                         .font(.subheadline)
-                        .foregroundColor(.secondary) // Dynamic text color
+                        .foregroundColor(.secondary)
                         .padding(.bottom)
                 }
             }
@@ -157,7 +182,7 @@ struct ContentView: View {
                 saveToPDF()
             }) {
                 Text("Download PDF")
-                    .foregroundColor(.white) // Keeps contrast for button
+                    .foregroundColor(.white)
                     .padding()
                     .background(Color.green)
                     .cornerRadius(8)
@@ -170,12 +195,12 @@ struct ContentView: View {
                         ProgressView("Generating PDF...", value: progress, total: 1.0)
                             .progressViewStyle(LinearProgressViewStyle())
                             .padding()
-                            .foregroundColor(.primary) // Dynamic text color
+                            .foregroundColor(.primary)
                         Text("\(Int(progress * 100))% completed")
-                            .foregroundColor(.secondary) // Dynamic text color
+                            .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.black.opacity(0.5)) // Semi-transparent overlay
+                    .background(Color.black.opacity(0.5))
                 }
             }
         )
@@ -185,11 +210,6 @@ struct ContentView: View {
         .sheet(isPresented: $showDocumentPicker) {
             DocumentPicker { url in
                 handleFile(url: url)
-            }
-        }
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker { image in
-                processImage(preprocessImage(image) ?? image)
             }
         }
     }
@@ -524,6 +544,52 @@ struct DocumentPicker: UIViewControllerRepresentable {
 
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {}
     }
+}
+
+// MARK: - Camera Picker Implementation
+struct CameraPicker: UIViewControllerRepresentable {
+    var onPick: (UIImage) -> Void
+    var onCancel: (() -> Void)? = nil
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        var parent: CameraPicker
+
+        init(_ parent: CameraPicker) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.onPick(image)
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.onCancel?()
+            picker.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+
+        // Check if the camera is available
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        } else {
+            print("Camera not available.")
+        }
+
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 }
 
 // MARK: - Image Picker Wrapper
