@@ -1,199 +1,136 @@
 import SwiftUI
 import PhotosUI
-import Vision
-
-
 
 struct ContentView: View {
-    @State private var selectedImage: UIImage?
-    @State private var processedImage: UIImage?
-    @State private var isPickerPresented = false
+    @State private var selectedImage: UIImage? = nil
+    @State private var showEditor = false
 
     var body: some View {
         NavigationView {
             VStack {
                 if let image = selectedImage {
-                    Text("Original Image:")
-                        .font(.headline)
-                        .padding(.top)
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 300, maxHeight: 300)
-                } else {
-                    Text("No image selected")
-                        .foregroundColor(.gray)
-                }
-
-                HStack {
-                    Button("Upload Image") {
-                        isPickerPresented = true
-                    }
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-
-                    if selectedImage != nil {
-                        Button("Convert to Passport Size") {
-                            print("Convert to Passport Size button clicked.") // Debug
-                            if let image = selectedImage {
-                                print("Image is available. Starting conversion...") // Debug
-                                processedImage = createPassportPhoto(from: image)
-                            } else {
-                                print("Error: No image selected for conversion.") // Debug
-                            }
-                        }
-
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+                    NavigationLink(destination: ImageEditorView(image: image), isActive: $showEditor) {
+                        EmptyView()
                     }
                 }
-
-                if let outputImage = processedImage {
-                    Text("Passport Photo:")
-                        .font(.headline)
-                        .padding(.top)
-                    Image(uiImage: outputImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 300, maxHeight: 300)
-
-                    Button("Save to Photos") {
-                        saveImageToPhotos(outputImage)
-                    }
-                    .padding()
-                    .background(Color.orange)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                Button("Upload Image") {
+                    selectImage()
                 }
+                .font(.title2)
+                .padding()
             }
-            .padding()
-            .navigationTitle("Passport Photo Maker")
-            .sheet(isPresented: $isPickerPresented) {
-                PHPickerViewControllerWrapper(selectedImage: $selectedImage)
-            }
+            .navigationTitle("Home")
         }
     }
 
-    func saveImageToPhotos(_ image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+    private func selectImage() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = ImagePickerCoordinator(selectedImage: $selectedImage, showEditor: $showEditor)
+        UIApplication.shared.windows.first?.rootViewController?.present(picker, animated: true)
     }
 }
 
-struct PHPickerViewControllerWrapper: UIViewControllerRepresentable {
+class ImagePickerCoordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @Binding var selectedImage: UIImage?
+    @Binding var showEditor: Bool
 
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selectionLimit = 1
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = context.coordinator
-        return picker
+    init(selectedImage: Binding<UIImage?>, showEditor: Binding<Bool>) {
+        _selectedImage = selectedImage
+        _showEditor = showEditor
     }
 
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
-        let parent: PHPickerViewControllerWrapper
-
-        init(_ parent: PHPickerViewControllerWrapper) {
-            self.parent = parent
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            selectedImage = image
+            showEditor = true
         }
+        picker.dismiss(animated: true)
+    }
 
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            picker.dismiss(animated: true)
-            guard let provider = results.first?.itemProvider,
-                  provider.canLoadObject(ofClass: UIImage.self) else { return }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+struct ImageEditorView: View {
+    var image: UIImage
+    @State private var overlayRect = CGRect(x: 0, y: 0, width: 200, height: 200) // Initial crop rect
+    @State private var scaleFactor: CGFloat = 1.0
+    @State private var adjustedImage = UIImage()
+    @Environment(\.presentationMode) var presentationMode
 
-            provider.loadObject(ofClass: UIImage.self) { image, _ in
-                if let image = image as? UIImage {
-                    DispatchQueue.main.async {
-                        self.parent.selectedImage = image
-                    }
+    var body: some View {
+        VStack {
+            ZStack {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .overlay(
+                        CropOverlayView(overlayRect: $overlayRect, image: image)
+                            .gesture(DragGesture().onChanged { value in
+                                handleDrag(value: value)
+                            })
+                    )
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            HStack {
+                Button("Save") {
+                    saveCroppedImage()
                 }
+                .font(.headline)
+                .padding()
+                Spacer()
+                Button("Cancel") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .font(.headline)
+                .padding()
             }
         }
+        .navigationBarHidden(true)
+        .onAppear {
+            setupEditor()
+        }
+    }
+
+    private func setupEditor() {
+        let scale = min(UIScreen.main.bounds.width / image.size.width,
+                        UIScreen.main.bounds.height / image.size.height)
+        scaleFactor = scale
+        overlayRect = CGRect(x: 50, y: 50, width: 204, height: 204)
+    }
+
+    private func handleDrag(value: DragGesture.Value) {
+        let delta = value.translation
+        overlayRect.origin.x += delta.width
+        overlayRect.origin.y += delta.height
+    }
+
+    private func saveCroppedImage() {
+        let scaledRect = CGRect(x: overlayRect.origin.x / scaleFactor,
+                                y: overlayRect.origin.y / scaleFactor,
+                                width: overlayRect.width / scaleFactor,
+                                height: overlayRect.height / scaleFactor)
+
+        if let cropped = image.cgImage?.cropping(to: scaledRect) {
+            let croppedImage = UIImage(cgImage: cropped)
+            UIImageWriteToSavedPhotosAlbum(croppedImage, nil, nil, nil)
+        }
+        presentationMode.wrappedValue.dismiss()
+    }
+}
+struct CropOverlayView: View {
+    @Binding var overlayRect: CGRect
+    var image: UIImage
+
+    var body: some View {
+        Rectangle()
+            .stroke(Color.blue, lineWidth: 2)
+            .frame(width: overlayRect.width, height: overlayRect.height)
+            .position(x: overlayRect.midX, y: overlayRect.midY)
+            .background(Color.black.opacity(0.5))
+            .mask(Rectangle().inset(by: -10))
     }
 }
 
-func createPassportPhoto(from image: UIImage) -> UIImage? {
-    guard let cgImage = image.cgImage else {
-        print("Error: Unable to get CGImage from UIImage.") // Debug
-        return nil
-    }
-
-    print("Starting face detection...") // Debug
-
-    let request = VNDetectFaceRectanglesRequest()
-    let handler = VNImageRequestHandler(cgImage: cgImage, orientation: .up, options: [:])
-
-    do {
-        try handler.perform([request])
-
-        guard let face = request.results?.first as? VNFaceObservation else {
-            print("Error: No face detected.") // Debug
-            return nil
-        }
-
-        print("Face detected. Bounding box: \(face.boundingBox)") // Debug
-
-        let imageWidth = CGFloat(cgImage.width)
-        let imageHeight = CGFloat(cgImage.height)
-
-        let faceRect = CGRect(
-            x: face.boundingBox.origin.x * imageWidth,
-            y: (1 - face.boundingBox.origin.y - face.boundingBox.height) * imageHeight,
-            width: face.boundingBox.width * imageWidth,
-            height: face.boundingBox.height * imageHeight
-        )
-
-        print("Face rectangle in image coordinates: \(faceRect)") // Debug
-
-        // Define crop rectangle
-        let passportAspectRatio: CGFloat = 35 / 45
-        let passportHeight = faceRect.height * 2.5
-        let passportWidth = passportHeight * passportAspectRatio
-
-        let cropX = max(faceRect.midX - passportWidth / 2, 0)
-        let cropY = max(faceRect.midY - passportHeight / 2, 0)
-
-        let cropRect = CGRect(
-            x: cropX,
-            y: cropY,
-            width: min(passportWidth, imageWidth - cropX),
-            height: min(passportHeight, imageHeight - cropY)
-        )
-
-        print("Crop rectangle for passport photo: \(cropRect)") // Debug
-
-        guard let croppedCGImage = cgImage.cropping(to: cropRect) else {
-            print("Error: Cropping failed.") // Debug
-            return nil
-        }
-
-        print("Cropping successful. Resizing to passport dimensions...") // Debug
-
-        let croppedUIImage = UIImage(cgImage: croppedCGImage, scale: image.scale, orientation: image.imageOrientation)
-        let targetSize = CGSize(width: 413, height: 531) // Passport size at 300 DPI
-
-        UIGraphicsBeginImageContextWithOptions(targetSize, true, 1.0)
-        croppedUIImage.draw(in: CGRect(origin: .zero, size: targetSize))
-        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        print("Passport photo created successfully.") // Debug
-
-        return resizedImage
-    } catch {
-        print("Error: Face detection failed - \(error.localizedDescription)") // Debug
-        return nil
-    }
-}
