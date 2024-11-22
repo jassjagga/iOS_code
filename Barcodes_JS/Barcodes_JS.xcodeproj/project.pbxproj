@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AFF512F789DB430ED535B7C /* Pods_Barcodes_JS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 536B9A8D91573881B8F22B7C /* Pods_Barcodes_JS.framework */; };
+		1E7D9AF029D5F6108C214FA7 /* Pods_Barcodes_JSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D13AE469BF75B5E8B4C7390D /* Pods_Barcodes_JSTests.framework */; };
 		ABCF6D842CDDFF93003F1348 /* CoreXLSX in Frameworks */ = {isa = PBXBuildFile; productRef = ABCF6D832CDDFF93003F1348 /* CoreXLSX */; };
+		F57AF9ED49CC0FF35CE7178F /* Pods_Barcodes_JS_Barcodes_JSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C32E2F63C88B7A0A28470B5E /* Pods_Barcodes_JS_Barcodes_JSUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,9 +31,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		536B9A8D91573881B8F22B7C /* Pods_Barcodes_JS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Barcodes_JS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71CB2408029366AFDF79D89A /* Pods-Barcodes_JS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Barcodes_JS.debug.xcconfig"; path = "Target Support Files/Pods-Barcodes_JS/Pods-Barcodes_JS.debug.xcconfig"; sourceTree = "<group>"; };
+		85E65054D05DFF93F6AC7DE1 /* Pods-Barcodes_JSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Barcodes_JSTests.release.xcconfig"; path = "Target Support Files/Pods-Barcodes_JSTests/Pods-Barcodes_JSTests.release.xcconfig"; sourceTree = "<group>"; };
+		A5B6352575847292989841CE /* Pods-Barcodes_JS-Barcodes_JSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Barcodes_JS-Barcodes_JSUITests.release.xcconfig"; path = "Target Support Files/Pods-Barcodes_JS-Barcodes_JSUITests/Pods-Barcodes_JS-Barcodes_JSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		ABCF6D472CDDFE62003F1348 /* Barcodes_JS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Barcodes_JS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABCF6D572CDDFE63003F1348 /* Barcodes_JSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Barcodes_JSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABCF6D612CDDFE63003F1348 /* Barcodes_JSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Barcodes_JSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEDEDC4373335D28658E3520 /* Pods-Barcodes_JS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Barcodes_JS.release.xcconfig"; path = "Target Support Files/Pods-Barcodes_JS/Pods-Barcodes_JS.release.xcconfig"; sourceTree = "<group>"; };
+		C32E2F63C88B7A0A28470B5E /* Pods_Barcodes_JS_Barcodes_JSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Barcodes_JS_Barcodes_JSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7A435A2BF89C6396C029116 /* Pods-Barcodes_JS-Barcodes_JSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Barcodes_JS-Barcodes_JSUITests.debug.xcconfig"; path = "Target Support Files/Pods-Barcodes_JS-Barcodes_JSUITests/Pods-Barcodes_JS-Barcodes_JSUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D13AE469BF75B5E8B4C7390D /* Pods_Barcodes_JSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Barcodes_JSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC99CCD43C018B2C7BEC53A9 /* Pods-Barcodes_JSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Barcodes_JSTests.debug.xcconfig"; path = "Target Support Files/Pods-Barcodes_JSTests/Pods-Barcodes_JSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -57,6 +69,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABCF6D842CDDFF93003F1348 /* CoreXLSX in Frameworks */,
+				1AFF512F789DB430ED535B7C /* Pods_Barcodes_JS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E7D9AF029D5F6108C214FA7 /* Pods_Barcodes_JSTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,12 +85,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F57AF9ED49CC0FF35CE7178F /* Pods_Barcodes_JS_Barcodes_JSUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4504542C99A184B58EF0B31F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				71CB2408029366AFDF79D89A /* Pods-Barcodes_JS.debug.xcconfig */,
+				AEDEDC4373335D28658E3520 /* Pods-Barcodes_JS.release.xcconfig */,
+				C7A435A2BF89C6396C029116 /* Pods-Barcodes_JS-Barcodes_JSUITests.debug.xcconfig */,
+				A5B6352575847292989841CE /* Pods-Barcodes_JS-Barcodes_JSUITests.release.xcconfig */,
+				EC99CCD43C018B2C7BEC53A9 /* Pods-Barcodes_JSTests.debug.xcconfig */,
+				85E65054D05DFF93F6AC7DE1 /* Pods-Barcodes_JSTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		ABCF6D3E2CDDFE62003F1348 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +113,7 @@
 				ABCF6D642CDDFE63003F1348 /* Barcodes_JSUITests */,
 				ABCF6D822CDDFF93003F1348 /* Frameworks */,
 				ABCF6D482CDDFE62003F1348 /* Products */,
+				4504542C99A184B58EF0B31F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +130,9 @@
 		ABCF6D822CDDFF93003F1348 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				536B9A8D91573881B8F22B7C /* Pods_Barcodes_JS.framework */,
+				C32E2F63C88B7A0A28470B5E /* Pods_Barcodes_JS_Barcodes_JSUITests.framework */,
+				D13AE469BF75B5E8B4C7390D /* Pods_Barcodes_JSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -112,9 +144,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABCF6D6B2CDDFE63003F1348 /* Build configuration list for PBXNativeTarget "Barcodes_JS" */;
 			buildPhases = (
+				2E9F496BC1C0B29116025842 /* [CP] Check Pods Manifest.lock */,
 				ABCF6D432CDDFE62003F1348 /* Sources */,
 				ABCF6D442CDDFE62003F1348 /* Frameworks */,
 				ABCF6D452CDDFE62003F1348 /* Resources */,
+				526786B19BAAE922B092A496 /* [CP] Embed Pods Frameworks */,
+				AB56C8622CEC5A6F00ACF704 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -135,6 +170,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABCF6D6E2CDDFE63003F1348 /* Build configuration list for PBXNativeTarget "Barcodes_JSTests" */;
 			buildPhases = (
+				4E5309FDE39D40B8CFCDB520 /* [CP] Check Pods Manifest.lock */,
 				ABCF6D532CDDFE63003F1348 /* Sources */,
 				ABCF6D542CDDFE63003F1348 /* Frameworks */,
 				ABCF6D552CDDFE63003F1348 /* Resources */,
@@ -148,8 +184,6 @@
 				ABCF6D5A2CDDFE63003F1348 /* Barcodes_JSTests */,
 			);
 			name = Barcodes_JSTests;
-			packageProductDependencies = (
-			);
 			productName = Barcodes_JSTests;
 			productReference = ABCF6D572CDDFE63003F1348 /* Barcodes_JSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -158,9 +192,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ABCF6D712CDDFE63003F1348 /* Build configuration list for PBXNativeTarget "Barcodes_JSUITests" */;
 			buildPhases = (
+				1E364C0505F2381B45FE42BD /* [CP] Check Pods Manifest.lock */,
 				ABCF6D5D2CDDFE63003F1348 /* Sources */,
 				ABCF6D5E2CDDFE63003F1348 /* Frameworks */,
 				ABCF6D5F2CDDFE63003F1348 /* Resources */,
+				2128DA37C085A6ED3886D266 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -171,8 +207,6 @@
 				ABCF6D642CDDFE63003F1348 /* Barcodes_JSUITests */,
 			);
 			name = Barcodes_JSUITests;
-			packageProductDependencies = (
-			);
 			productName = Barcodes_JSUITests;
 			productReference = ABCF6D612CDDFE63003F1348 /* Barcodes_JSUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -247,6 +281,126 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1E364C0505F2381B45FE42BD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Barcodes_JS-Barcodes_JSUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2128DA37C085A6ED3886D266 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Barcodes_JS-Barcodes_JSUITests/Pods-Barcodes_JS-Barcodes_JSUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Barcodes_JS-Barcodes_JSUITests/Pods-Barcodes_JS-Barcodes_JSUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Barcodes_JS-Barcodes_JSUITests/Pods-Barcodes_JS-Barcodes_JSUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2E9F496BC1C0B29116025842 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Barcodes_JS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4E5309FDE39D40B8CFCDB520 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Barcodes_JSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		526786B19BAAE922B092A496 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Barcodes_JS/Pods-Barcodes_JS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Barcodes_JS/Pods-Barcodes_JS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Barcodes_JS/Pods-Barcodes_JS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB56C8622CEC5A6F00ACF704 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "find \"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}\" -type f -name \"*.framework\" -exec chmod u+w {} \\;\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		ABCF6D432CDDFE62003F1348 /* Sources */ = {
@@ -407,6 +561,7 @@
 		};
 		ABCF6D6C2CDDFE63003F1348 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71CB2408029366AFDF79D89A /* Pods-Barcodes_JS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -418,7 +573,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Barcodes-JS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Barcode JS";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to scan numbers for generating barcodes, making it easier to process and store information.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -440,6 +595,7 @@
 		};
 		ABCF6D6D2CDDFE63003F1348 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AEDEDC4373335D28658E3520 /* Pods-Barcodes_JS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -451,7 +607,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Barcodes-JS-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Barcode JS";
-				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to scan numbers for generating barcodes, making it easier to process and store information.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -473,6 +629,7 @@
 		};
 		ABCF6D6F2CDDFE63003F1348 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC99CCD43C018B2C7BEC53A9 /* Pods-Barcodes_JSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -492,6 +649,7 @@
 		};
 		ABCF6D702CDDFE63003F1348 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85E65054D05DFF93F6AC7DE1 /* Pods-Barcodes_JSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -511,6 +669,7 @@
 		};
 		ABCF6D722CDDFE63003F1348 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7A435A2BF89C6396C029116 /* Pods-Barcodes_JS-Barcodes_JSUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -528,6 +687,7 @@
 		};
 		ABCF6D732CDDFE63003F1348 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5B6352575847292989841CE /* Pods-Barcodes_JS-Barcodes_JSUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

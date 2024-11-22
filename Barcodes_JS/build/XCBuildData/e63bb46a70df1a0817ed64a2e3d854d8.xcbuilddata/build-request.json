@@ -1,0 +1,112 @@
+{
+  "buildCommand" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : false,
+    "targets" : null
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "7f37ff702cde8ac112b1a98d6933a2c10852d101e541de6cc4fd92f61a4c03c1"
+    },
+    {
+      "guid" : "7f37ff702cde8ac112b1a98d6933a2c127489b27139b4967f2b61cf9ce674fea"
+    },
+    {
+      "guid" : "7f37ff702cde8ac112b1a98d6933a2c18aef66116282e54794a2152b286c444c"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42cd53d937e824fad9f4527eeeb684cb40"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42bbbb266cb4185458611c79148d1a9d13"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42c777611770584bd7c20ebf80e3d30200"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42718890dfdac589615663a02d43d9af3e"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd421a9fac6eb9c80f8eed49fda0531af6a4"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42b1283251fe1143142bd7c7d13a65abbe"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42b7cd041790feb16d5e7aa11bf34eb0ac"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42e2ffbedd1e0ec9e8b24b254c33711152"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42f10882e1684b8a3dfdec597bc0a47af3"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42ad53226b339581a6725de188f2c8f823"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd420062393f91a1d2d94e3e5ed3a5aa5da9"
+    },
+    {
+      "guid" : "8699adb1dd336b26511df848a716bd42c9e4d77647dbd2f60d4df5fb297112b6"
+    }
+  ],
+  "containerPath" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/Barcodes_JS.xcworkspace",
+  "continueBuildingAfterErrors" : true,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphoneos",
+      "sdk" : "iphoneos18.1",
+      "sdkVariant" : "iphoneos",
+      "supportedArchitectures" : [
+        "arm64e",
+        "arm64v8",
+        "arm64",
+        "armv8"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/jaswindersingh/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/jaswindersingh/Library/Developer/Xcode/DerivedData/Barcodes_JS-bgnortcidymbychhunnnwuzveypi/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/jaswindersingh/Library/Developer/Xcode/DerivedData/Barcodes_JS-bgnortcidymbychhunnnwuzveypi/Index.noindex/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPhone15,3",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "18.1",
+          "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone15,3",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "CLANG_COVERAGE_MAPPING" : "YES",
+          "CLANG_PROFILE_DATA_DIRECTORY" : "/Users/jaswindersingh/Library/Developer/Xcode/DerivedData/Barcodes_JS-bgnortcidymbychhunnnwuzveypi/CodeCoverage/ProfileData",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "NO",
+          "ONLY_ACTIVE_ARCH" : "YES",
+          "TARGET_DEVICE_IDENTIFIER" : "00008120-001879182E8BC01E",
+          "TARGET_DEVICE_MODEL" : "iPhone15,3",
+          "TARGET_DEVICE_OS_VERSION" : "18.1",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphoneos"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

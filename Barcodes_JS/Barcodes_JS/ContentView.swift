@@ -5,6 +5,8 @@ import UniformTypeIdentifiers
 import CoreXLSX
 import Vision
 import PhotosUI
+import GoogleMobileAds
+
 
 struct ContentView: View {
     @State private var inputCode: String = ""
@@ -41,192 +43,156 @@ struct ContentView: View {
     }
 
     var body: some View {
-        ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [Color(.systemTeal), Color(.systemBackground)]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-
-            VStack(spacing: 30) {
-                Text("Barcode Generator")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .foregroundColor(.primary)
-                    .padding(.top, 40)
-
-                // Dropdown for Barcode Type
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Select Barcode Type")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-
-                    Menu {
-                        ForEach(BarcodeType.allCases) { type in
-                            Button(action: {
-                                barcodeType = type
-                            }) {
-                                Text(type.rawValue)
-                                    .foregroundColor(.primary)
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            Text(barcodeType.rawValue)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "chevron.down")
-                                .foregroundColor(.secondary)
-                        }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                .background(Color(.systemBackground).opacity(0.8))
-                        )
+        VStack(spacing: 20) {
+            // Add the BannerAdView below the title
+                  BannerAdView(adUnitID: "ca-app-pub-3940256099942544/6300978111") // Replace with your real Ad Unit ID
+                      .frame(width: 320, height: 50) // AdMob's standard banner size
+                      .padding()
+            Text("Barcode Generator")
+                .font(.largeTitle)
+                .foregroundColor(.primary)
+                .padding(.top)
+            
+            Menu {
+                ForEach(BarcodeType.allCases) { type in
+                    Button(action: {
+                        barcodeType = type
+                    }) {
+                        Text(type.rawValue)
+                            .foregroundColor(.primary)
                     }
                 }
+            } label: {
+                HStack {
+                    Text("Select Barcode Type: \(barcodeType.rawValue)")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .background(Color(UIColor.systemBackground))
+                )
+            }
+            .padding(.horizontal)
+
+            TextField("Enter item numbers (comma-separated)", text: $inputCode)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray, lineWidth: 1)
+                        .background(Color(UIColor.secondarySystemBackground))
+                )
                 .padding(.horizontal)
+                .focused($isInputFocused)
+                .toolbar {
+                    ToolbarItem(placement: .keyboard) {
+                        Button("Done") {
+                            isInputFocused = false
+                        }
+                    }
+                }
+                .overlay(
+                    Button(action: {
+                        showDocumentPicker = true
+                    }) {
+                        Image(systemName: "paperclip")
+                            .padding()
+                            .foregroundColor(.primary)
+                    }
+                    .offset(x: -30),
+                    alignment: .trailing
+                )
 
-                // Input TextField
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Enter Item Numbers")
+            Button(action: {
+                showActionSheet = true
+            }) {
+                Text("Select Image")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.orange)
+                    .cornerRadius(8)
+            }
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(
+                    title: Text("Select Source"),
+                    buttons: [
+                        .default(Text("Camera")) {
+                            showCameraPicker = true
+                        },
+                        .default(Text("Photo Gallery")) {
+                            showImagePicker = true
+                        },
+                        .cancel()
+                    ]
+                )
+            }
+            .sheet(isPresented: $showCameraPicker) {
+                CameraPicker { image in
+                    processImage(preprocessImage(image) ?? image)
+                }
+            }
+            .sheet(isPresented: $showImagePicker) {
+                ImagePicker { image in
+                    processImage(preprocessImage(image) ?? image)
+                }
+            }
+
+            Button(action: {
+                generateBarcodesFromInput()
+            }) {
+                Text("Generate Barcode")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }
+
+            if let firstBarcode = firstBarcode {
+                VStack {
+                    Text("First Barcode")
                         .font(.headline)
+                        .foregroundColor(.primary)
+                    Image(uiImage: firstBarcode)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 100)
+                    Text(firstBarcodeLabel)
+                        .font(.subheadline)
                         .foregroundColor(.secondary)
-
-                    TextField("Comma-separated values", text: $inputCode)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                .background(Color(.systemBackground).opacity(0.8))
-                        )
-                        .padding(.horizontal)
-                        .focused($isInputFocused)
-                        .toolbar {
-                            ToolbarItem(placement: .keyboard) {
-                                Button("Done") {
-                                    isInputFocused = false
-                                }
-                            }
-                        }
-                        .overlay(
-                            Button(action: {
-                                showDocumentPicker = true
-                            }) {
-                                Image(systemName: "paperclip")
-                                    .padding()
-                                    .foregroundColor(.blue)
-                            }
-                            .offset(x: -30),
-                            alignment: .trailing
-                        )
+                        .padding(.bottom)
                 }
+            }
 
-                // Buttons
-                VStack(spacing: 20) {
-                    Button(action: {
-                        showActionSheet = true
-                    }) {
-                        HStack {
-                            Image(systemName: "photo.on.rectangle.angled")
-                                .foregroundColor(.white)
-                            Text("Select Image")
-                                .foregroundColor(.white)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.orange, Color.yellow]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .cornerRadius(12)
-                    }
-                    .padding(.horizontal)
-
-                    Button(action: {
-                        generateBarcodesFromInput()
-                    }) {
-                        HStack {
-                            Image(systemName: "barcode")
-                                .foregroundColor(.white)
-                            Text("Generate Barcode")
-                                .foregroundColor(.white)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.blue, Color.cyan]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .cornerRadius(12)
-                    }
-                    .padding(.horizontal)
-
-                    Button(action: {
-                        saveToPDF()
-                    }) {
-                        HStack {
-                            Image(systemName: "doc.text.fill")
-                                .foregroundColor(.white)
-                            Text("Download PDF")
-                                .foregroundColor(.white)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.green, Color.mint]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .cornerRadius(12)
-                    }
-                    .padding(.horizontal)
+            if let lastBarcode = lastBarcode {
+                VStack {
+                    Text("Last Barcode")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    Image(uiImage: lastBarcode)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200, height: 100)
+                    Text(lastBarcodeLabel)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom)
                 }
+            }
 
-                Spacer()
+            Button(action: {
+                saveToPDF()
+            }) {
+                Text("Download PDF")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.green)
+                    .cornerRadius(8)
             }
-            .padding(.bottom, 20)
-        }
-        .sheet(isPresented: $showDocumentPicker) {
-            DocumentPicker { url in
-                handleFile(url: url)
-            }
-        }
-        .actionSheet(isPresented: $showActionSheet) {
-            ActionSheet(
-                title: Text("Select Source"),
-                buttons: [
-                    .default(Text("Camera")) {
-                        showCameraPicker = true
-                    },
-                    .default(Text("Photo Gallery")) {
-                        showImagePicker = true
-                    },
-                    .cancel()
-                ]
-            )
-        }
-        .sheet(isPresented: $showCameraPicker) {
-            CameraPicker { image in
-                processImage(preprocessImage(image) ?? image)
-            }
-        }
-        .sheet(isPresented: $showImagePicker) {
-            ImagePicker { image in
-                processImage(preprocessImage(image) ?? image)
-            }
-        }
-        .alert(isPresented: $showError) {
-            Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
         }
         .overlay(
             Group {
@@ -235,8 +201,8 @@ struct ContentView: View {
                         ProgressView("Generating PDF...", value: progress, total: 1.0)
                             .progressViewStyle(LinearProgressViewStyle())
                             .padding()
+                            .foregroundColor(.primary)
                         Text("\(Int(progress * 100))% completed")
-                            .font(.caption)
                             .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -671,4 +637,3 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
     }
 }
-

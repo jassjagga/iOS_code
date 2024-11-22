@@ -1,0 +1,1 @@
+@rpath/Barcodes_JS.debug.dylib

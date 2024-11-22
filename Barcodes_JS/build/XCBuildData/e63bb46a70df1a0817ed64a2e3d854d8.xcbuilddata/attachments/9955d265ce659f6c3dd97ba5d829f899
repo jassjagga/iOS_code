@@ -1,0 +1,5 @@
+ extern const unsigned char Pods_Barcodes_JSTestsVersionString[];
+ extern const double Pods_Barcodes_JSTestsVersionNumber;
+
+ const unsigned char Pods_Barcodes_JSTestsVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:Pods_Barcodes_JSTests  PROJECT:Pods-1" "\n";
+ const double Pods_Barcodes_JSTestsVersionNumber __attribute__ ((used)) = (double)1.;

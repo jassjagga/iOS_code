@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct Barcodes_JSApp: App {
+    // Use AppDelegate for lifecycle management
+       @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
             ContentView()

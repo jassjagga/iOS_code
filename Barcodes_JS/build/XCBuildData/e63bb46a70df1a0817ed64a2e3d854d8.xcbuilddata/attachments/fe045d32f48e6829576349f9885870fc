@@ -1,0 +1,28 @@
+{
+  "" : {
+    "diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests-master.dia",
+    "emit-module-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests-master.swiftdeps"
+  },
+  "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/Barcodes_JSUITests/Barcodes_JSUITests.swift" : {
+    "const-values" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.swiftconstvalues",
+    "dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.d",
+    "diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.dia",
+    "index-unit-output-path" : "/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.o",
+    "llvm-bc" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.bc",
+    "object" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.o",
+    "swift-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests.swiftdeps",
+    "swiftmodule" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITests~partial.swiftmodule"
+  },
+  "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/Barcodes_JSUITests/Barcodes_JSUITestsLaunchTests.swift" : {
+    "const-values" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.swiftconstvalues",
+    "dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.d",
+    "diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.dia",
+    "index-unit-output-path" : "/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.o",
+    "llvm-bc" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.bc",
+    "object" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.o",
+    "swift-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests.swiftdeps",
+    "swiftmodule" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSUITests.build/Objects-normal/arm64/Barcodes_JSUITestsLaunchTests~partial.swiftmodule"
+  }
+}

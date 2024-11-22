@@ -1,0 +1,18 @@
+{
+  "" : {
+    "diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests-master.dia",
+    "emit-module-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests-master.swiftdeps"
+  },
+  "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/Barcodes_JSTests/Barcodes_JSTests.swift" : {
+    "const-values" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.swiftconstvalues",
+    "dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.d",
+    "diagnostics" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.dia",
+    "index-unit-output-path" : "/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.o",
+    "llvm-bc" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.bc",
+    "object" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.o",
+    "swift-dependencies" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests.swiftdeps",
+    "swiftmodule" : "/Users/jaswindersingh/Documents/IOS_code/Barcodes_JS/build/Barcodes_JS.build/Debug-iphoneos/Barcodes_JSTests.build/Objects-normal/arm64/Barcodes_JSTests~partial.swiftmodule"
+  }
+}

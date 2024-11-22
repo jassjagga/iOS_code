@@ -1,0 +1,4 @@
+module XMLCoder {
+header "XMLCoder-Swift.h"
+export *
+}
