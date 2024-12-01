@@ -1,4 +1,0 @@
-module CoreXLSX {
-header "CoreXLSX-Swift.h"
-export *
-}
