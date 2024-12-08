@@ -188,4 +188,3 @@ struct WeekSummaryScreen: View {
         .padding()
     }
 }
-
