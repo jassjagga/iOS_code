@@ -121,4 +121,3 @@ class ParkingPuzzleScene: SKScene {
         isUserInteractionEnabled = false // Disable further interaction
     }
 }
-
